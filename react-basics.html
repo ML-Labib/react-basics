@@ -13,8 +13,20 @@
         <script type="text/babel">
             const container = document.querySelector('.js-container');
             // const button = <button>Good job!</button>;
-            const paragaraph = <p>My name is Labib</p>;
-            ReactDOM.createRoot(container).render(paragaraph);
+            // const paragaraph = <p>My name is Labib</p>;
+                const productCost = 10;
+                const shippingCost = 5;
+                const totalCost = productCost + shippingCost;
+            const div = <div>
+
+                <p>Product cost:${productCost}</p>
+                <p>Shipping cost: ${shippingCost}</p>
+                <p>Total cost: ${totalCost}</p>
+
+                <button>Place your order</button>
+
+            </div>
+            ReactDOM.createRoot(container).render(div);
         </script>
     </body>
 </html>
