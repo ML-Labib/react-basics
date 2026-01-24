@@ -50,33 +50,47 @@
                 )
             }
 
+            function Button({name}){
+                return (
+                    <button>{name}</button>
+                );
+            };
+
+            function Input({placeholder, type}) {
+                return (
+                    <div>
+                        <input placeholder={placeholder} type={type} />
+                    </div>
+                );
+            };
+
+            function ProductDetails({name, price, discountPrice, imgSource}){
+                const priceDisplay = discountPrice ? (<>
+                                                                                        <p><del>Price: ${price}</del></p>
+                                                                                        <p>Discount Price: ${discountPrice}</p>
+                                                                                    </>) :
+                                                                                    (<p>Price: ${price}</p>);
+                return (
+                    <div>
+                        <img src={imgSource} width="100" />
+                        <p>{name}</p>
+                        {priceDisplay}
+
+
+                        < Button name="Add to cart" />
+                    </div>
+                );
+            };
+
+
             function App() {
                 return (
                     <>
-                        <ChatInput />
-                        <ChatMessage 
-                            messege="Hello chatbot" 
-                            sender="user" 
-                        /> 
-                        <ChatMessage 
-                            messege="Hello! How can I help you?" 
-                            sender="robot"
-                        />  
-                        <ChatMessage 
-                            messege="Can you tell me todays date?"  
-                            sender="user"
-                        />  
-                        <ChatMessage 
-                            messege="Today is January 23" 
-                            sender="robot"
-                        />          
-                        <ChatMessage 
-                            messege="Flip a coin?" 
-                            sender="user"
-                        />          
+                        <ProductDetails name="Cotton Socks" price="6.00" discountPrice="5.45" imgSource="cotton-socks.png" />
+                        <ProductDetails name="Plain T-Shirt" price="7.99" imgSource="plain-t-shirt.png" />
                     </>
                 );
-            }
+            };
 
 
             const container = document.querySelector('.js-container');
