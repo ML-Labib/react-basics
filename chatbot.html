@@ -14,11 +14,27 @@
         <script type="text/babel">
             function ChatInput({chatMessages, setChatMessages}) {
                 const [inputText, setInputText] = React.useState("")
+                const [isLoading, setIsLoading] = React.useState(0)
+
+
                 function saveInputText(event){
                     
-                setInputText(event.target.value);
+                    setInputText(event.target.value);
+                    };
+                
+                function handleKeyDown(event){
+                    if (event.key === "Enter"){
+                        sendMessage();
+                    }
+                    if (event.key === "Escape"){
+                        setInputText("");
+                    }
                 };
-                function sendMessage(event){
+
+                async function sendMessage(event){
+                    if (inputText ==="" | isLoading){
+                        return;
+                    }
                     const newChatMessages = [
                         ...chatMessages, {
                         messege: inputText,
@@ -28,24 +44,36 @@
                         ];
 
                     setChatMessages(newChatMessages);
-                    
-                    const response = Chatbot.getResponse(inputText);
-                    setChatMessages([
-                        ...newChatMessages, {
-                        messege: response,
+                    setIsLoading(1);
+                    setInputText("");
+                    const beforeResponse =  {
+                        messege: "Loading...",
                         sender: "robot",
                         id: crypto.randomUUID()
-                        }
-                        ]);
-                    
-                    setInputText("");
+                        };
+                    setChatMessages([
+                        ...newChatMessages, beforeResponse]);
+                    const response =  await Chatbot.getResponseAsync(inputText);
+                    // setChatMessages([
+                    //     ...newChatMessages, {
+                    //     messege: response,
+                    //     sender: "robot",
+                    //     id: crypto.randomUUID()
+                    //     }
+                    //     ]);
+                    beforeResponse.messege = response;
+                    setChatMessages([
+                        ...newChatMessages, beforeResponse]);
+                    setIsLoading(0);
                 };
+
                 return (
                     <>
                         <input 
                             placeholder="Send a messege to chatbot" 
                             size="30" 
                             onChange={saveInputText}
+                            onKeyDown={handleKeyDown}
                             value={inputText}
                         />
                         <button 
@@ -55,18 +83,7 @@
         }
 
             function ChatMessage({ messege, sender } ){
-            // const { messege, sender } = props;
-            // const sender = props.sender
-            /*
-            if (sender === "robot"){
-                return (
-                    <div>
-                        <img src="robot.png" width="50"></ img>
-                        {messege}
-                    </div>
-                )   
-            }*/
-                
+
                 return (
                     <div>
                         {sender === "robot" &&  (
@@ -107,9 +124,7 @@
             );
         }
 
-
-
-
+       
             function App() {
                 const [chatMessages, setChatMessages] =React.useState([
                 {id: "1", messege: "Hello, chatbot.", sender: "user"},
@@ -117,17 +132,20 @@
                 { id: "3",messege: "Can you get me today's date?", sender: "user" },
                 { id: "4",messege: "Today is January 24.", sender: "robot" },
             ]);
+
                 return (
                     <>
-                     <ChatInput
-                     chatMessages={chatMessages}
-                     setChatMessages={setChatMessages} 
-                     />
-                    <DisplayChat
-                    chatMessages={chatMessages}
-                     setChatMessages={setChatMessages}
+                  <ChatInput
+                      chatMessages={chatMessages}
+                      setChatMessages={setChatMessages} 
                       />
-                        </>
+                    <DisplayChat
+                     chatMessages={chatMessages}
+                      setChatMessages={setChatMessages}
+                       /> 
+
+                        
+                       </>
                 );
             };
 
