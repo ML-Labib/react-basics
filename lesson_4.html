@@ -9,13 +9,15 @@
             margin-bottom: 0px; */
         }
             .on-button {
-                background-color: rgb(25, 135, 84);
+                background-color: rgb(0, 123, 255);
                 color: white;
                 border: none;
                 border-radius: 5px;
-                padding: 20px, 25px;
+                padding: 10px 15px;
                 cursor: pointer;
-                font-size: 30px;
+                font-size: 10px;
+                margin-right: 8px;
+  
             }
             .off-button {
                 background-color: rgb(220, 53, 69);
@@ -25,6 +27,24 @@
                 padding: 20px, 25px;
                 cursor: pointer;
                 font-size: 30px;
+                width: 100px;
+            }
+            .text-input{
+                margin-bottom: 10px;
+                padding: 5px 10px;
+
+            }
+
+            .show-button {
+                cursor: pointer;
+                margin-left: 10px;
+                margin-bottom: 10px;
+            }
+
+            .password-input-container {
+                display: flex;
+                align-items: center;
+                
             }
     
 
@@ -38,21 +58,54 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
-        function NewButton(){
-            const [isbuttonOn, setIsButtonOn] = React.useState(1);
-            function handleClick(){
-                setIsButtonOn(!isbuttonOn);
-            }
 
-            return(
-                <button className={!isbuttonOn ? "on-button" : "off-button"}
-                                onClick={handleClick}
-                >{!isbuttonOn ? "ON" : "OFF"}</button>
-            );
+        function TextInput({type, placeholder}){
+            return (
+                <input 
+                    className="text-input"
+                    type={type}
+                    placeholder={placeholder} 
+                />
+            )
         }
 
+        function NewButton({name}){
+            return(
+                <button className="on-button">{name} </button>
+            );
+        };
+
+        function ShowButton({isPasswordVisible, setIsPasswordVisible}){
+            function handleClick(){
+                setIsPasswordVisible(!isPasswordVisible);
+            }
+            return(
+                <button className="show-button" onClick={handleClick}>{isPasswordVisible ? "Hide" : "Show"} </button>
+            );
+        };
+
+        function LogInForm(){
+            const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+            return(
+                <div>
+                    <h5> Hello, welcome to my website </h5>
+                    <div>
+                        <TextInput type="text" placeholder="Email" />
+                    </div>
+                    <div className="password-input-container">
+                        <TextInput type={!isPasswordVisible ? "password" : "text"} placeholder="Password" />
+                        <ShowButton isPasswordVisible={isPasswordVisible} setIsPasswordVisible={setIsPasswordVisible} />
+                    </div>
+                    <div>
+                        <NewButton name="Login" />
+                        <NewButton name="Sign Up" />
+                    </div>
+                </div>
+            );
+        };
+
       const container = document.querySelector('.js-container');
-      ReactDOM.createRoot(container).render(<NewButton/>);
+      ReactDOM.createRoot(container).render("Hi");
     </script>
   </body>
 </html>
