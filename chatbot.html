@@ -25,12 +25,13 @@
                 border-width: 1px;
                 font-size: 15px;
                 flex-grow: 1;
+
                
             }
 
             .chat-input-container {
                 display: flex; 
-                margin-bottom: 20px;
+                margin-bottom: 60px;
             }
 
             .app-container {
@@ -46,11 +47,11 @@
             .chat-message-user{
                 display: flex;
                 justify-content: end;
-                align-items: start;
+                align-items: center;
             }
             .chat-message-robot{
                 display: flex;
-                align-items: start;
+                align-items: center;
                 
             }
             
@@ -60,12 +61,13 @@
                 border-radius: 10px;
                 margin-right: 10px;
                 margin-left: 10px;
-                margin-bottom: 20px;
                 max-width: 300px;
+;
             }
             
             .chat-message-profile {
                 width: 45px;
+;
               
             }
 
@@ -188,12 +190,17 @@
 
         
         function DisplayChat({chatMessages, setChatMessages}){
-             
             // const [chatMessages, setChatMessages] = array
+            const chatMessagesRef = React.useRef(null );
 
-            // React.useEffect(() => {
-            //     const chatMessages = React.useRef(null);
-            //     }, [chatMessages]);
+            React.useEffect(
+                () => {
+                    const containerElem = chatMessagesRef.current;
+                    if (containerElem){
+                        containerElem.scrollTop = containerElem.scrollHeight;
+                    }   
+                }, [chatMessages]
+            );
     
             const chatMessagesComponents = chatMessages.map((chatMessege) => {
                 return (
@@ -205,15 +212,14 @@
                 );
             });
             return (
-                <div className="chat-message-container">
-                   
+                <div className="chat-message-container"
+                        ref={chatMessagesRef}>
                     {chatMessagesComponents}
-
                     </div>
             );
         }
 
-       
+        
             function App() {
                 const [chatMessages, setChatMessages] =React.useState([
                 {id: "1", messege: "Hello, chatbot.", sender: "user"},
@@ -224,8 +230,6 @@
 
                 return (
                     <div className="app-container">
-                  
-                    
                         <DisplayChat
                             chatMessages={chatMessages}
                             setChatMessages={setChatMessages}
@@ -233,9 +237,8 @@
                         <ChatInput
                             chatMessages={chatMessages}
                             setChatMessages={setChatMessages} 
-                        />
-                        
-                       </div>
+                        />                       
+                        </div>
                 );
             };
 
