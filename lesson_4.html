@@ -5,11 +5,12 @@
     <style>
         body {
             font-family: Arial;
-            /* margin-top: 0px;
-            margin-bottom: 0px; */
+            margin-top: 0px;
+            margin-bottom: 0px;
+            background-color: rgb(222, 222, 222);
         }
             .on-button {
-                background-color: rgb(0, 123, 255);
+                background-color: rgb(25, 135, 84);
                 color: white;
                 border: none;
                 border-radius: 5px;
@@ -29,22 +30,12 @@
                 font-size: 30px;
                 width: 100px;
             }
-            .text-input{
-                margin-bottom: 10px;
-                padding: 5px 10px;
-
-            }
-
-            .show-button {
-                cursor: pointer;
-                margin-left: 10px;
-                margin-bottom: 10px;
-            }
-
-            .password-input-container {
+            .button-container {
                 display: flex;
+                flex-grow: 1;
+                justify-content: center;
                 align-items: center;
-                
+                height: 100vh;
             }
     
 
@@ -54,58 +45,49 @@
     <div class="js-container"></div>
 
     <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
+        function Buttons() {
+            const [counter,  setCounter] = React.useState(0);
+            const clickRef = React.useRef(null);
 
-        function TextInput({type, placeholder}){
+            function handleAutoClick() {
+                setInterval(() => {
+                    const autoElem = clickRef.current;
+                    if (autoElem) {
+                        autoElem.click();
+                    }
+                }, 1000);
+            };
+
+            function handleReset(){
+
+                setCounter(0);
+                }
+
             return (
-                <input 
-                    className="text-input"
-                    type={type}
-                    placeholder={placeholder} 
-                />
-            )
-        }
+                <div className="button-container">
+                <button 
+                    className="on-button"
+                    onClick={
+                        () => 
+                        setCounter(counter + 1)}
+                    ref={clickRef}
+                    >
+                    Clicked {counter} {counter == 1 ? "time" : "times"}
 
-        function NewButton({name}){
-            return(
-                <button className="on-button">{name} </button>
-            );
-        };
-
-        function ShowButton({isPasswordVisible, setIsPasswordVisible}){
-            function handleClick(){
-                setIsPasswordVisible(!isPasswordVisible);
-            }
-            return(
-                <button className="show-button" onClick={handleClick}>{isPasswordVisible ? "Hide" : "Show"} </button>
-            );
-        };
-
-        function LogInForm(){
-            const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
-            return(
-                <div>
-                    <h5> Hello, welcome to my website </h5>
-                    <div>
-                        <TextInput type="text" placeholder="Email" />
-                    </div>
-                    <div className="password-input-container">
-                        <TextInput type={!isPasswordVisible ? "password" : "text"} placeholder="Password" />
-                        <ShowButton isPasswordVisible={isPasswordVisible} setIsPasswordVisible={setIsPasswordVisible} />
-                    </div>
-                    <div>
-                        <NewButton name="Login" />
-                        <NewButton name="Sign Up" />
-                    </div>
+                </button>
+                <button className="on-button" onClick={handleReset}>Reset</button>
+                <button className="on-button" onClick={handleAutoClick}>Auto Click</button>
                 </div>
             );
-        };
-
+        }
       const container = document.querySelector('.js-container');
-      ReactDOM.createRoot(container).render("Hi");
+      ReactDOM.createRoot(container).render(<Buttons />);
     </script>
   </body>
 </html>

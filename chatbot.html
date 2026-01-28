@@ -66,7 +66,7 @@
             }
             
             .chat-message-profile {
-                width: 45px;
+                width: 40px;
 ;
               
             }
@@ -76,6 +76,18 @@
                 margin-top: 20px;
                 overflow: scroll;
                 scrollbar-width: none;
+                
+            }
+            
+            .no-messages {
+                text-align: center;
+                color: gray;
+
+            }
+
+            .loading-spinner {
+                height: 40px;
+                margin: -15px;
             }
 
     </style>
@@ -109,7 +121,7 @@
                 };
 
                 async function sendMessage(event){
-                    if (inputText ==="" | isLoading){
+                    if (inputText ==="" || isLoading){
                         return;
                     }
                     const newChatMessages = [
@@ -124,7 +136,7 @@
                     setIsLoading(1);
                     setInputText("");
                     const beforeResponse =  {
-                        messege: "Loading...",
+                        messege: <img className="loading-spinner" src="loading-spinner.gif" />,
                         sender: "robot",
                         id: crypto.randomUUID()
                         };
@@ -187,21 +199,25 @@
                 )
             }
 
+        function useAutoScroll(dependencies){
+            const containerRef = React.useRef(null );
+
+            React.useEffect(
+                () => {
+                    const containerElem = containerRef.current;
+                    if (containerElem){
+                        containerElem.scrollTop = containerElem.scrollHeight;
+                    }   
+                }, dependencies);
+            return containerRef;
+        };
 
         
         function DisplayChat({chatMessages, setChatMessages}){
             // const [chatMessages, setChatMessages] = array
-            const chatMessagesRef = React.useRef(null );
+            const chatMessagesRef = useAutoScroll([chatMessages]);
+            
 
-            React.useEffect(
-                () => {
-                    const containerElem = chatMessagesRef.current;
-                    if (containerElem){
-                        containerElem.scrollTop = containerElem.scrollHeight;
-                    }   
-                }, [chatMessages]
-            );
-    
             const chatMessagesComponents = chatMessages.map((chatMessege) => {
                 return (
                     <ChatMessage 
@@ -214,7 +230,13 @@
             return (
                 <div className="chat-message-container"
                         ref={chatMessagesRef}>
-                    {chatMessagesComponents}
+                      {chatMessagesComponents.length === 0 
+                            ? (
+                                <p className="no-messages">
+                                    Welcome to the chatbot project! Send a messege to get started.
+                                 </ p>
+                                ) 
+                            :chatMessagesComponents}
                     </div>
             );
         }
@@ -222,10 +244,7 @@
         
             function App() {
                 const [chatMessages, setChatMessages] =React.useState([
-                {id: "1", messege: "Hello, chatbot.", sender: "user"},
-                { id: "2", messege: "Hello, how can I help you?", sender: "robot" },
-                { id: "3",messege: "Can you get me today's date?", sender: "user" },
-                { id: "4",messege: "Today is January 24.", sender: "robot" },
+     
             ]);
 
                 return (
