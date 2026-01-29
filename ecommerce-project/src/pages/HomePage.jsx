@@ -1,10 +1,23 @@
 import { Header } from "../components/Header"
-import { products } from "../data/products"
+// import { products } from "../data/products"
 import "../styles/HomePage.css"
 
+// const response =  await fetch("http://localhost:3000/api/products")
+// let products;
+// if (response.status === 200){
+//     products = await response.json()
+// }
+// else{
+//     products = []
+// }
 
 export function HomePage() {
-
+    fetch("http://localhost:3000/api/products")
+        .then((response) => {
+            response.json().then((data) => {
+                console.log(data)
+            })
+        })
     return (
         <>
             <title>Ecommerce Project</title>
