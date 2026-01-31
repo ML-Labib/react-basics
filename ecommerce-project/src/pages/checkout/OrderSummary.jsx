@@ -15,12 +15,24 @@ export function OrderSummary({ cart, loadCart }) {
 
 
     }, [])
+
+    
+
     return (
         <div className="order-summary">
             {deliveryOptions.length > 0 && cart.map((cartItem) => {
                 const selectedDeliveryOption = deliveryOptions.find((deliveryOption) => {
                     return deliveryOption.id == cartItem.deliveryOptionId
                 })
+
+                const deleteCartItem = async () => {
+                        await axios.delete(`/api/cart-items/${cartItem.productId}`, {
+                        
+                        })
+                        await loadCart()
+                    }
+
+       
                 return (
                     <div key={cartItem.id} className="cart-item-container">
                         <div className="delivery-date">
@@ -46,7 +58,8 @@ export function OrderSummary({ cart, loadCart }) {
                                     <span className="update-quantity-link link-primary">
                                         Update
                                     </span>
-                                    <span className="delete-quantity-link link-primary">
+                                    <span className="delete-quantity-link link-primary"
+                                    onClick={deleteCartItem}>
                                         Delete
                                     </span>
                                 </div>

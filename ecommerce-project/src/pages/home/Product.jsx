@@ -3,7 +3,7 @@ import { useState } from "react"
 import { formatMoney } from "../../utils/money"
 
 export function Product( { product, loadCart }) {
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
     const addToCart = async () => {
                     await axios.post("/api/cart-items", {
                         productId: product.id,
