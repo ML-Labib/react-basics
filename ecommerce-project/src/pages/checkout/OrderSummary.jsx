@@ -7,10 +7,13 @@ import { DelivereyOptions } from "./DeliveryOptions";
 export function OrderSummary({ cart }) {
     const [deliveryOptions, setDeliveryOptions] = useState([])
     useEffect(() => {
-        axios.get("/api/delivery-options?expand=estimatedDeliveryTime")
-            .then((response) => {
-                setDeliveryOptions(response.data)
-            })
+        const fetchDeliveryOptions = async () => {
+            const response = await axios.get("/api/delivery-options?expand=estimatedDeliveryTime")
+            setDeliveryOptions(response.data)
+        }
+        fetchDeliveryOptions()
+
+
     }, [])
     return (
         <div className="order-summary">

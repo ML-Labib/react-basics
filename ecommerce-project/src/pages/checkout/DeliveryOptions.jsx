@@ -3,7 +3,6 @@ import { formatMoney } from "../../utils/money"
 
 export function DelivereyOptions({ deliveryOptions, cartItem }) {
 
-    
     return (
         <>
             <div className="delivery-options-title">

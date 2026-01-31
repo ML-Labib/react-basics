@@ -1,11 +1,21 @@
-
+import axios from "axios"
+import { useEffect, useState } from "react";
 import { OrderSummary } from "./OrderSummary";
 import { PaymentSummary } from "./PaymentSummary";
 import "../../styles/CheckoutPage.css";
 import "../../styles/checkout-header.css"
 
 export function CheckoutPage({ cart }) {
+    const [paymentSummary, setPaymentSummary] = useState(null)
 
+    useEffect(() => {
+        const fetchPaymentData = async () => {
+            const response = await axios.get("/api/payment-summary")
+            setPaymentSummary(response.data)
+        };
+
+        fetchPaymentData()
+    }, [])
     return (
         <>
             <title>Checkout</title>
@@ -37,7 +47,7 @@ export function CheckoutPage({ cart }) {
 
                     <OrderSummary cart={cart} />
 
-                    <PaymentSummary />
+                    <PaymentSummary paymentSummary={paymentSummary} />
 
                 </div>
             </div>
