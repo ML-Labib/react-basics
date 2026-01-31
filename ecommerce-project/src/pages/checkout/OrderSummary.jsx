@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { formatMoney } from "../../utils/money"
 import { DeliveryOptions } from "./DeliveryOptions";
 
-export function OrderSummary({ cart }) {
+export function OrderSummary({ cart, loadCart }) {
     const [deliveryOptions, setDeliveryOptions] = useState([])
     useEffect(() => {
         const fetchDeliveryOptions = async () => {
@@ -53,7 +53,7 @@ export function OrderSummary({ cart }) {
                             </div>
 
                             <div className="delivery-options">
-                                <DeliveryOptions deliveryOptions={deliveryOptions} cartItem={cartItem} />
+                                <DeliveryOptions deliveryOptions={deliveryOptions} cartItem={cartItem} loadCart={loadCart}/>
                             </div>
 
                         </div>
