@@ -1,7 +1,7 @@
 import dayjs from "dayjs"
 import { formatMoney } from "../../utils/money"
 
-export function DelivereyOptions({ deliveryOptions, cartItem }) {
+export function DeliveryOptions({ deliveryOptions, cartItem }) {
 
     return (
         <>

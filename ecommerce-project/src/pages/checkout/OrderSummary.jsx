@@ -2,7 +2,7 @@ import dayjs from "dayjs"
 import axios from "axios"
 import { useEffect, useState } from "react";
 import { formatMoney } from "../../utils/money"
-import { DelivereyOptions } from "./DeliveryOptions";
+import { DeliveryOptions } from "./DeliveryOptions";
 
 export function OrderSummary({ cart }) {
     const [deliveryOptions, setDeliveryOptions] = useState([])
@@ -53,7 +53,7 @@ export function OrderSummary({ cart }) {
                             </div>
 
                             <div className="delivery-options">
-                                <DelivereyOptions deliveryOptions={deliveryOptions} cartItem={cartItem} />
+                                <DeliveryOptions deliveryOptions={deliveryOptions} cartItem={cartItem} />
                             </div>
 
                         </div>
