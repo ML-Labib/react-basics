@@ -3,7 +3,7 @@ import { OrderProducts } from "./OrdersProducts";
 import { formatMoney } from "../../utils/money";
 
 
-export function OrdersGrid( { orders }){
+export function OrdersGrid( { orders, loadCart }){
 
     return(
         <div className="orders-grid">
@@ -29,7 +29,7 @@ export function OrdersGrid( { orders }){
                                     </div>
                                 </div>
 
-                                <OrderProducts order={order} />
+                                <OrderProducts order={order} loadCart={loadCart} />
                             </div>
                         )
                     })}
