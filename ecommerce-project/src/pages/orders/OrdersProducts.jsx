@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import axios from "axios";
+import { Link } from "react-router"
 import { Fragment } from "react";
 
 export function OrderProducts({ order, loadCart }) {
@@ -9,8 +10,8 @@ export function OrderProducts({ order, loadCart }) {
             {order.products.map((orderProduct) => {
                 const addToCart = async () => {
                     await axios.post("/api/cart-items", {
-                        productId: orderProduct.productId,
-                        quantity: orderProduct.quantity
+                        productId: orderProduct.product.id,
+                        quantity: 1
                     })
                     await loadCart();
                 }
@@ -38,11 +39,11 @@ export function OrderProducts({ order, loadCart }) {
                         </div>
 
                         <div className="product-actions">
-                            <a href="/tracking">
+                            <Link to="/tracking">
                                 <button className="track-package-button button-secondary">
                                     Track package
                                 </button>
-                            </a>
+                            </Link>
                         </div>
                     </ Fragment>
 
