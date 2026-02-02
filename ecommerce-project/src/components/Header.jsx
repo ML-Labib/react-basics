@@ -9,7 +9,7 @@ export function Header({ cart }) {
     })
     const navigate = useNavigate()
     const handleSearchText = (event) => {
-        setSearchText(event.target.value)
+        setSearch(event.target.value)
     }
     const [searchParams] = useSearchParams()
     const searchText = searchParams.get("search")
